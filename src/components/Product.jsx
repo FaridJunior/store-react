@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { ProductConsumer } from "../context";
+import PropTypes from 'prop-types'
 
 class Product extends Component {
   render() {
@@ -16,7 +17,7 @@ class Product extends Component {
             <Link to="/details">
               <img src={img} alt="product" className="card-img-top"/>
             </Link>
-            <button className="cart-btn"
+            <button    className="cart-btn"
               disabled={inCart ? true : false}
               onClick={() => { console.log("added to the card") }}>
             {inCart ? (<p className="text-capitalize mb-0 " disabled > in cart</p>)
@@ -30,7 +31,7 @@ class Product extends Component {
               {title}
             </p>
             <h5 className="text-blue font-italic mb-0">
-              <spam className="mr-1">$</spam>
+              <span className="mr-1">$</span>
               {price}
             </h5>
           </div> 
@@ -43,11 +44,21 @@ class Product extends Component {
 
 export default Product;
 
+
+Product.propTypes = {
+  product:PropTypes.shape({ 
+    id: PropTypes.number,
+    img: PropTypes.string,
+    title : PropTypes.string,
+    price : PropTypes.number,
+    inCart: PropTypes.bool
+  }).isRequired
+}
+
 const ProductWrapper = styled.div`
 .card{
   border-color:transparent;
   transition:all 1s linear; 
-
 }
 .card-footer{
   background : transparent;
@@ -63,13 +74,11 @@ const ProductWrapper = styled.div`
   }
   .card-footer{
     background :rgba(247,247,247);
-
   }
 }
 .img-container{
   position:relative;
   overflow:hidden;
-
 }
 .card-img-top{
   transition: all 1s linear;
@@ -89,7 +98,6 @@ const ProductWrapper = styled.div`
   border-radius : 0.5rem 0 0 0 ;
   transform:translate(100%,100%);
   transition: all 1s linear;
-
 }
 .img-container:hover .cart-btn{
   transform :translate(0.0);
@@ -99,6 +107,3 @@ const ProductWrapper = styled.div`
   cursor:pointer;   
 }
 `
-
-
-

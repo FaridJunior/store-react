@@ -15,10 +15,27 @@ class ProductProvider extends Component {
     cartTotal: 0
   };
   increment = id => {
-    console.log("increamat item ");
+    let tempCart = [...this.state.cart];
+    const selectedProduct = tempCart.find(item => item.id === id)
+    const index = tempCart.indexOf(selectedProduct);
+    const product = tempCart[index]
+    product.count = product.count + 1;
+    product.total = product.count * product.price; 
+    this.setState(() => { return {cart:[...tempCart]} },()=>{this.addTotals()})
   };
   decrement = id => {
-    console.log("decreament item ");
+    let tempCart = [...this.state.cart];
+    const selectedProduct = tempCart.find(item => item.id === id)
+    const index = tempCart.indexOf(selectedProduct);
+    const product = tempCart[index]
+    product.count = product.count - 1;
+    if (product.count === 0) {
+      this.removeItem(id)
+    } else { 
+      product.total = product.count * product.price; 
+      this.setState(() => { return { cart: [...tempCart] } }, () => { this.addTotals() })
+    }
+    
   };
   removeItem = id => {
     let tempProducts = [...this.state.products];
@@ -27,8 +44,8 @@ class ProductProvider extends Component {
     const index = tempProducts.indexOf(this.getItem(id));
     let removedProduct = tempProducts[index];
     removedProduct.inCart = false;
-    removedProduct.inCart = 0;
-    removedProduct.inCart = 0;
+    removedProduct.count = 0;
+    removedProduct.total = 0;
     this.setState(
       () => {
         return {

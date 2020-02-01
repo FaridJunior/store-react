@@ -25,7 +25,7 @@ class Modal extends Component {
                   text-center text-capitalize"
                     >
                       <h5>item added to the cart</h5>
-                      <img src={img} alt="img-fluid " alt="product" />
+                      <img src={img} className="img-fluid " alt="product" />
                       <h5>{title}</h5>
                       <h5 className="text-muted">price : $ {price}</h5>
                       <Link to="/">
